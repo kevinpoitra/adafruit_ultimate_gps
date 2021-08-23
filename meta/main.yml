@@ -1,13 +1,19 @@
 galaxy_info:
   author: Kevin Poitra
-  description: Sets up a Raspberry Pi 4 to work with an Adafruit Ultimate GPS HAT
+  description: Sets up a Raspberry Pi to work with an Adafruit Ultimate GPS HAT
   license: BSD-3-Clause
   min_ansible_version: 2.1
 
+  platforms:
+    - name: Debian
+      versions:
+        - all
+
   galaxy_tags:
-    raspberry-pi
-    raspberry
-    adafruit
-    gps
+    - raspberry
+    - pi
+    - raspberrypi
+    - adafruit
+    - gps
 
 dependencies: []
