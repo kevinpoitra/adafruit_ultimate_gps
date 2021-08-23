@@ -19,7 +19,7 @@ Example Playbook
         hosts: all
         become: yes
         roles:
-            - adafruit_ultimate_gps
+            - kevinpoitra.adafruit_ultimate_gps
 
 
 License
