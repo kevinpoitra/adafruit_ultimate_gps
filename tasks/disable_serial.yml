@@ -1,0 +1,18 @@
+---
+- name: Stop and disable the serial-getty service
+  ansible.builtin.systemd:
+    name: serial-getty@ttyAMA0
+    state: stopped
+    enabled: no
+
+- name: Stop and disable the hciuart service
+  ansible.builtin.systemd:
+    name: hciuart
+    state: stopped
+    enabled: no
+
+- name: Remove console serial configuration from boot command line arguments
+  ansible.builtin.replace:
+    path: /boot/cmdline.txt
+    regexp: '\bconsole=serial0,115200\s\b'
+  notify: Reboot

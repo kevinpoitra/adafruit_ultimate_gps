@@ -1,0 +1,31 @@
+---
+- name: Install GPS and PPS tools
+  ansible.builtin.apt:
+    name:
+      - gpsd
+      - gpsd-clients
+      - python-gps
+      - pps-tools
+    state: present
+    update-cache: true
+
+- name: Ensure gpsd's USBAUTO USB hotplugging support is turned off
+  ansible.builtin.lineinfile:
+    path: '/etc/default/gpsd'
+    regexp: '^USBAUTO='
+    line: USBAUTO="false"
+  notify: Reboot
+
+- name: Configure which devices gpsd should listen to
+  ansible.builtin.lineinfile:
+    path: '/etc/default/gpsd'
+    regexp: '^DEVICES='
+    line: DEVICES="/dev/ttyAMA0 /dev/pps0"
+  notify: Reboot
+
+- name: Configure gpsd to work with NMEA formatted data
+  ansible.builtin.lineinfile:
+    path: '/etc/default/gpsd'
+    regexp: '^GPSD_OPTIONS='
+    line: GPSD_OPTIONS="-n"
+  notify: Reboot

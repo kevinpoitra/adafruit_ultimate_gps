@@ -1,0 +1,10 @@
+---
+- include_tasks: disable_serial.yml
+
+- include_tasks: adjust_cpu_scaling_governor.yml
+
+- include_tasks: adjust_boot_config.yml
+
+- include_tasks: adjust_dhcp_client.yml
+
+- include_tasks: setup_gps_tools.yml

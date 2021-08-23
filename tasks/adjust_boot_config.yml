@@ -1,0 +1,14 @@
+---
+- name: Apply the 'Disable Bluetooth', 'Enable GPS PPS', and 'Disable power savings' Device Tree overlays to the boot configuration
+  ansible.builtin.blockinfile:
+    path: /boot/config.txt
+    block: |
+      # Use the /dev/ttyAMA0 UART GPS instead of Bluetooth
+      dtoverlay=disable-bt
+
+      # Enable GPS PPS
+      dtoverlay=pps-gpio,gpiopin=4
+
+      # Disable power saving
+      nohz=off
+  notify: Reboot

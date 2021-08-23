@@ -1,0 +1,14 @@
+---
+- name: Disable raspi-config 'ondemand CPU scaling governor' enforcer service
+  ansible.builtin.systemd:
+    name: raspi-config
+    state: stopped
+    enabled: no
+
+- name: Set the CPU's performance scaling governor to 'performance' after boot
+  ansible.builtin.blockinfile:
+    path: /etc/rc.local
+    insertbefore: '\bexit\s0\b'
+    block: |
+      echo "performance" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+  notify: Reboot

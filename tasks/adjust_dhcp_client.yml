@@ -1,0 +1,24 @@
+---
+- name: Remove dhclient exit hooks for NTP
+  ansible.builtin.file:
+    path: '/etc/dhcp/dhclient-exit-hooks.d/ntp'
+    state: absent
+  notify: Reboot
+
+- name: Remove dhcpcd hooks for NTP
+  ansible.builtin.file:
+    path: '/lib/dhcpcd/dhcpcd-hooks/50-ntp.conf'
+    state: absent
+  notify: Reboot
+
+- name: Configure the DHCP client to not ask for SNTP servers
+  ansible.builtin.replace:
+    path: '/etc/dhcp/dhclient.conf'
+    regexp: '\b,\sdhcp6\.sntp-servers\b'
+  notify: Reboot
+
+- name: Configure the DHCP client to not ask for NTP servers
+  ansible.builtin.replace:
+    path: '/etc/dhcp/dhclient.conf'
+    regexp: '\b,\sntp-servers\b'
+  notify: Reboot
